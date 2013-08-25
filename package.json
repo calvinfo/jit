@@ -1,0 +1,17 @@
+{
+  "name": "jit",
+  "version": "0.0.1",
+  "description": "Run a function with some amount of jitter",
+  "keywords": [
+    "jitter",
+    "jit"
+  ],
+  "author": "Calvin French-Owen <calvin@calv.info>",
+  "repository": { "type": "git", "url": "git://github.com/calvinfo/jit.git" },
+  "dependencies": {},
+  "devDependencies": {
+    "mocha": "*",
+    "should": "*"
+  },
+  "main": "lib/index"
+}
