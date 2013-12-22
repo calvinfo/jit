@@ -5,7 +5,9 @@
 
 ## Usage
 
-```javascript
+You can set timeouts:
+
+```js
 var jit = require('jit');
 
 var start = Date.now();
@@ -19,9 +21,29 @@ jit(elapsed, 500);      // 458
 jit(elapsed, 500, 500); // 501
 ```
 
+Or you can set jitter-y intervals:
+
+```js
+var start = Date.now();
+
+function elapsed () {
+  console.log(Date.now() - start);
+}
+
+// clear our interval function after 500ms
+var clear = jit.interval(elapsed, 100);
+setTimeout(clear, 500);
+```
+
+
 #### jit(fn, min, [max])
 
 Runs `fn` within the specified bounds. If no third parameter is specified, attempts to run the function within 0.7 * the input.
+
+#### jit.interval(fn, min, [max])
+
+Runs `fn` on a randomized interval between `min` and `max`. If no `max` is given, then it will treat the second parameter as the `max`. Returns a function to clear the interval
+
 
 ## License
 
