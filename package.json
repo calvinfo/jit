@@ -7,11 +7,17 @@
     "jit"
   ],
   "author": "Calvin French-Owen <calvin@calv.info>",
-  "repository": { "type": "git", "url": "git://github.com/calvinfo/jit.git" },
-  "dependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/calvinfo/jit.git"
+  },
+  "dependencies": {
+    "debug": "~0.7.4"
+  },
   "devDependencies": {
     "mocha": "*",
-    "should": "*"
+    "should": "*",
+    "batch": "~0.5.0"
   },
   "main": "lib/index"
 }

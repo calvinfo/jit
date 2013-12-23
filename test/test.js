@@ -1,34 +1,46 @@
+var assert = require('assert');
 var jit = require('..');
-var should = require('should');
+var Batch = require('batch');
+
+
+/**
+ * Create a function to run `test` multiple `times`
+ */
+
+function run (test, times) {
+  var batch = new Batch();
+  for (var i = 0; i < times; i++) batch.push(test);
+  return function (done) { batch.end(done); };
+}
 
 
 describe('jit', function () {
-
-  it('should schedule within the max', function (done) {
+  it('should schedule within the max', run(function (done) {
     var isDone = false;
     jit(function () { isDone = true; done(); }, 50);
-    jit(function () { isDone.should.eql(false); }, 10);
-  });
+    jit(function () { assert(!isDone); }, 10);
+  }, 100));
 
-  it('should schedule within the time', function (done) {
+  it('should schedule within the time', run(function (done) {
     var isDone = false;
     jit(function () { isDone = true; }, 10, 20);
-    setTimeout(function () { isDone.should.eql(false); }, 5);
-    setTimeout(function () { isDone.should.eql(true); done(); }, 25);
-  });
+    setTimeout(function () { assert(!isDone); }, 5);
+    setTimeout(function () { assert(isDone); done(); }, 25);
+  }, 100));
 
   describe('#interval', function () {
-    it('should schedule and clear an interval', function (done) {
+    it('should schedule and clear an interval', run(function (done) {
       var runs = 0;
-      var clear = jit.interval(function () { runs++; }, 10, 10);
+      var clear = jit.interval(function () { runs++; }, 10);
       setTimeout(function () {
-        runs.should.eql(4);
+        assert(runs >= 4);
+        var total = runs;
         clear();
         setTimeout(function () {
-          runs.should.eql(4);
+          assert(runs == total);
           done();
         }, 100);
       }, 45);
-    });
+    }, 100));
   });
 });
